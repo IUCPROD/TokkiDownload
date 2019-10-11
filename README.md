@@ -14,8 +14,8 @@ How to make it work:
 7. Install the Webbrowser extension
 
 How to use it:
-2. Choose a folder you want to download things into and copy its path
-1. On the page you want to download a video (for example youtube or vlive) click the addon Button
+1. Choose a folder you want to download things into and copy its path
+2. On the page you want to download a video (for example youtube or vlive) click the addon Button
 3. Paste the path into the "Save to: __ " field 
 4. Choose your desired settings
 5. Click "Download" Button to download only the current tabs video. "Download list" will download all videos you've previously added to the list before, "Add to list" will add the video to the list.
