@@ -1,0 +1,8 @@
+[youtube] oiKj0Z_Xnjc: Downloading webpage
+[youtube] oiKj0Z_Xnjc: Downloading video info webpage
+[youtube] Downloading just video oiKj0Z_Xnjc because of --no-playlist
+[youtube] oiKj0Z_Xnjc: Downloading js player vflNSW9LL
+[youtube] oiKj0Z_Xnjc: Downloading js player vflNSW9LL
+[download] Destination: C:\Users\SCS\Desktop\testEXT1\downloaded\Stromae - Papaoutai (Clip Officiel).m4a
+[download]   0.0% of 3.59MiB at 200.00KiB/s ETA 00:18[download]   0.1% of 3.59MiB at 599.99KiB/s ETA 00:06[download]   0.2% of 3.59MiB at  1.37MiB/s ETA 00:02 [download]   0.4% of 3.59MiB at  2.93MiB/s ETA 00:01 [download]   0.8% of 3.59MiB at  2.02MiB/s ETA 00:01 [download]   1.7% of 3.59MiB at  2.20MiB/s ETA 00:01 [download]   3.5% of 3.59MiB at  2.48MiB/s ETA 00:01 [download]   6.9% of 3.59MiB at  3.04MiB/s ETA 00:01 [download]  13.9% of 3.59MiB at  4.84MiB/s ETA 00:00 [download]  27.8% of 3.59MiB at  7.24MiB/s ETA 00:00 [download]  55.7% of 3.59MiB at  9.13MiB/s ETA 00:00 [download] 100.0% of 3.59MiB at 10.75MiB/s ETA 00:00 [download] 100% of 3.59MiB in 00:00                  
+[ffmpeg] Correcting container in "C:\Users\SCS\Desktop\testEXT1\downloaded\Stromae - Papaoutai (Clip Officiel).m4a"
