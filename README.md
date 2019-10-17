@@ -1,7 +1,8 @@
 # TokkiDownload
 
 Only for Windows for now
-Links will follow soon~~
+Links and Installation instructions:
+https://tokki.be/index.php?id=download
 
 Together with the browser extension, youtube-dl and ffmpeg, this will make using youtube-dl simpler and comfier to use.
 How to make it work:
