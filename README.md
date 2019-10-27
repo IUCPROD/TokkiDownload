@@ -8,10 +8,7 @@ https://tokki.be/index.php?id=download
 Together with the browser extension, youtube-dl and ffmpeg, this will make using youtube-dl simpler and comfier to use.
 How to make it work:
 1. Download and extract this project into one folder
-2. Install Python 3 and set the environment variable
 3. Install Microsoft Visual C++ 2010 Redistributable Package (x86)
-4. Download Youtube-dl.exe and put it in the same folder
-5. Download FFmpeg.exe and put it in the same folder
 6. Run the Setup.py file
 7. Install the Webbrowser extension
 
