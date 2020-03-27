@@ -1,16 +1,17 @@
 # TokkiDownload
 
-Only for Windows for now
+Only for Windows
 
 Links and Installation instructions:
 https://tokki.be/index.php?id=download
 
-Together with the browser extension, youtube-dl and ffmpeg, this will make using youtube-dl simpler and comfier to use.
+Together with the browser extension, this will make using youtube-dl simpler and comfier.
 How to make it work:
-1. Download and extract this project into one folder
-3. Install Microsoft Visual C++ 2010 Redistributable Package (x86)
-6. Run the Setup.py file
-7. Install the Webbrowser extension
+1. Download and extract this project into one folder.
+2. Run the SETUP_MOVED_UPDATE.bat file in the folder. (double-click it)
+3. Install the Webbrowser extension
+
+!!!If you move the folder at some point after running SETUP_MOVED_UPDATE.bat, you will have to run it again. You should also run it once every month or so to update youtube-dl.!!!
 
 How to use it:
 1. Choose a folder you want to download things into and copy its path
@@ -18,3 +19,5 @@ How to use it:
 3. Paste the path into the "Save to: __ " field 
 4. Choose your desired settings
 5. Click "Download" Button to download only the current tabs video. "Download list" will download all videos you've previously added to the list before, "Add to list" will add the video to the list.
+
+For more detailed info go to the website mentioned above.
