@@ -7,7 +7,7 @@ https://tokki.be/index.php?id=download
 
 Together with the browser extension, this will make using youtube-dl simpler and comfier.
 How to make it work:
-1. Download and extract this project into one folder.
+1. Download and extract the newest release into one folder.
 2. Run the INSTALL.bat file in the folder. (double-click it)
 3. Install the Webbrowser extension
 
