@@ -66,7 +66,8 @@ def download_action(msg):
     if (msg["downloadaction"] == "downloadsingle"):
         ydl_opts = make_command(msg)
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([msg['url']])                
+            ydl.download([msg['url']])
+        send_message(encode_message("finished"))             
     elif (msg["downloadaction"] == "downloadlist"):
         with open("downloads.txt") as f:
             urls = f.readlines()
@@ -77,6 +78,7 @@ def download_action(msg):
                 ydl.download(urls)
             with open("downloads.txt", "w") as f:
                 f.write("")
+            send_message(encode_message("finished"))
         else:
             send_message(encode_message("emptylist"))
     else:
@@ -104,4 +106,4 @@ progress_seq = set(())
 while True:
     message = get_message()
     download_action(message)
-    send_message(encode_message("finished"))
+    
