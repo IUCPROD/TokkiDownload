@@ -1,0 +1,10 @@
+{
+    "name": "tkdl",
+    "description": "Host for native messaging",
+    "path": "tkdl_win.bat",
+    "type": "stdio",
+    "allowed_extensions": [
+      "tokkidownload@tokki.be"
+    ] 
+
+  }

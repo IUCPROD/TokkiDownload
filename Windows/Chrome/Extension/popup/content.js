@@ -10,11 +10,11 @@
     if(action=="hide"){
       document.getElementById(content).style.display = "none";
     }
-    else if(content == "temporary-content"){
-      document.getElementById(content).style.display = "block";
+    else if(content == "default-content" || content == "error-content" ){
+      document.getElementById(content).style.display = "flex";
     }
     else{
-      document.getElementById(content).style.display = "flex";
+      document.getElementById(content).style.display = "block";
     }
   }
   /**
@@ -30,7 +30,7 @@
       "playlist":document.getElementById("playlist").checked,
       "subtitles":document.getElementById("subtitles").checked,
       "url": url,
-      "downloadaction": downloadAction,
+      "action": action,
       "msg": "task"
     };
     return message;
@@ -38,35 +38,49 @@
 
   /**
    * @listens to sendMessage event from the background script
-   * Possibilities:
-   * message is error: sends error to error function and removes unsuccessful url from saved list.
-   * message is progress report: updates progress bar.
-   * message is finish notification: hides progress bar screen and sends to already downloaded screen
    */
   function onMessage(msg){
-    errorMsg = msg[1];
-    if(msg[0] == "error"){
-      onError(msg[1]);
-      urlList.pop();
-      chrome.storage.sync.set({'address': urlList});
-    }
-    else if (msg[0] == "progress"){
-      if(msg[1]=="emptylist"){       
-        document.getElementById("emptylist").style.display = "block";
-        document.getElementById("continue").style.display = "block";
-        urlList.pop();
-        chrome.storage.sync.set({'address': urlList});
-      }
-      else{
-        document.getElementById("progress").innerHTML = msg[1] + "%";
-        document.getElementById("myBar").style.width = msg[1] + "%";
-      }
-    }
-    else{
-      console.log(msg);
-      
-      hideShow("temporary-content", "hide");
-      urlGetter();
+    switch (msg['action']) {
+      case 'progress':
+        document.getElementById("progress").textContent = msg['status'] + "%";
+        document.getElementById("myBar").style.width = msg['status'] + "%";
+        break;
+      case "alreadydownloaded":
+        hideShow('default-content', 'hide');
+        hideShow('temporary-content', 'show');
+        hideShow('updating', 'hide');
+        hideShow('process', 'hide');
+        hideShow('alreadydownloaded', 'show');
+        break;
+      case "error":
+        onError(msg['error']);
+        break;
+      case "alreadydownloadedpl":
+        hideShow('alreadydownloadedpl', 'show');
+        hideShow('updating', 'hide');
+        hideShow('process', 'hide');
+        hideShow('default-content', 'hide');
+        hideShow('temporary-content', 'show');
+        break;
+      case "addedtolist":
+        hideShow('alreadyinlist', 'show');
+        hideShow('default-content', 'hide');
+        hideShow('process', 'hide');
+        hideShow('updating', 'hide');
+        hideShow('temporary-content', 'show');
+        break;
+      case "emptylist":
+        hideShow('default-content', 'hide');
+        hideShow('emptylist', 'show');
+        hideShow('process', 'hide');
+        hideShow('temporary-content', 'show');
+        break;
+      case "default":
+        hideShow('updating', 'hide');
+        hideShow('process', 'hide');
+        hideShow('temporary-content', 'hide');
+        hideShow('default-content', 'show');
+        break;
     }
   }
 
@@ -80,7 +94,7 @@
     }
     hideShow("default-content", "hide");
     hideShow("temporary-content", "hide");
-    document.getElementById("errortext").textContent = "Oh My Mistake!~~ " + "happened in: " + errLoc + " ErrorMsg: " + error.message;
+    document.getElementById("errortext").textContent ="ErrorMsg: " + error;
     hideShow("error-content", "show");
   }
 
@@ -110,25 +124,6 @@
   }
 
   /**
-   * Gets the current tab to get the url.
-   */
-  function setStoredPath(){
-    if (chrome.extension.lastError){
-      errLoc = "setStoredPath";
-      onError(chrome.extension.lastError);
-    }
-    else{
-      if(urlList.indexOf(currentUrl)>=0){
-        sender();
-      }
-      else{
-        urlList.push(currentUrl);
-        chrome.storage.sync.set({'address': urlList}, sender);
-      }
-    }
-  }
-
-  /**
    * Checks if the native application is already busy while content script is loading
    * by checking the busy variable in the background script. Shows content based on result.
    * @param page received 
@@ -139,7 +134,7 @@
       onError(chrome.extension.lastError);
     }
     else{
-      var isBusy = page.busy;
+      let isBusy = page.busy;
       if (page.critErr == "restart"){
         document.getElementById("errortext").textContent = "Oh My Mistake!~~ " + "happened in: Native Application";
         hideShow("default-content", "hide");
@@ -148,11 +143,21 @@
       }
       else if(isBusy == 0){
         isBusy = "";
-        urlGetter();
+        hideShow("default-content", "hide");
+        hideShow("updating", "show");
+        hideShow("temporary-content", "show");
+        chrome.tabs.query({active: true, currentWindow: true},urlGetter);
       }
-      else {
+      else if (isBusy == 1) {
+        hideShow("process", "show");
         hideShow("temporary-content", "show");
         hideShow("default-content", "hide");
+        isBusy = "";
+      }
+      else{
+        hideShow("default-content", "hide");
+        hideShow("updating", "show");
+        hideShow("temporary-content", "show");
         isBusy = "";
       }
     }
@@ -177,52 +182,29 @@
       }
     }
   }
+
   /**
-   * Gets current active tab for url gathering
-   */
-  function urlGetter(){
-    chrome.tabs.query({active: true, currentWindow: true},urlGetter2);
-  }
-  /**
-   * Gets already stored urls from storage.sync to check against the current url
    * @param {*} tabs 
    */
-  function urlGetter2(tabs){
+  function urlGetter(tabs){
     currentUrl = tabs[0].url;
-    chrome.storage.sync.get(['address'], urlChecker)
-  }
-  /**
-   * Checks if current url is already stored and shows appropriate content
-   * @param {*} stor 
-   */
-  function urlChecker(stor){
-    if(stor.address){
-      urlList = stor.address
-      if(stor.address.indexOf(currentUrl)>=0){
-        hideShow("default-content", "hide");
-        hideShow("alreadyDownloaded-content", "show");
-      }
-      else{
-        hideShow("default-content", "show");
-      }
-    }
-    else{
-      hideShow("default-content", "show");
-    }
+    action = "checkurl"
+    msgType = "task";
+    sender();
+    hideShow("updating", "show");
+
   }
 
   //START 
-  let downloadAction = 0;
+  let action = 0;
   let msgType = "";
   let errLoc ="";
   let currentUrl = "";
-  let urlList = [];
-  let errorMsg = "";
 
   //Adding listener for messages from the background script during open window
   chrome.runtime.onMessage.addListener(onMessage);
 
-  //Adding change even to path bar to make it normal again when a value is given
+  //Adding change event to path bar to make it normal again when a value is given
   document.getElementById("path").addEventListener("change", function(){
     document.getElementById("path").style.borderColor = null;
   }, false);
@@ -231,11 +213,15 @@
   document.getElementById("dlbutton").addEventListener("click",function(){
     if (document.getElementById("path").value){
       hideShow("default-content", "hide");
-      hideShow("temporary-content", "show");
-      downloadAction = "downloadsingle";
+      hideShow("alreadydownloaded", "hide");
+      hideShow("alreadydownloadedpl", "hide");
+      hideShow('alreadyinlist', 'hide');
+      hideShow("temporary-content", "show");      
+      hideShow("process", "show");
+      action = "downloadsingle";
       msgType = "task";
       pathName = document.getElementById("path").value;
-      chrome.storage.local.set({pathname:document.getElementById("path").value},setStoredPath);
+      chrome.storage.local.set({pathname:document.getElementById("path").value},sender);
     }
     else{
       //If no path was given the input bar will be colored red
@@ -246,11 +232,16 @@
   document.getElementById("dllistbutton").addEventListener("click",function(){
     if (document.getElementById("path").value){
       hideShow("default-content", "hide");
+      hideShow("alreadydownloaded", "hide");
+      hideShow("alreadydownloadedpl", "hide");
+      hideShow('emptylist', 'hide');
       hideShow("temporary-content", "show");
-      downloadAction = "downloadlist"
+      hideShow('alreadyinlist', 'hide');
+      hideShow("process", "show");
+      action = "downloadlist"
       msgType = "task";
       pathName = document.getElementById("path").value;
-      chrome.storage.local.set({pathname:document.getElementById("path").value},setStoredPath);
+      chrome.storage.local.set({pathname:document.getElementById("path").value},sender);
     }
     else{
       //If no path was given the input bar will be colored red
@@ -259,25 +250,32 @@
   },false );
 
   document.getElementById("addlistbutton").addEventListener("click",function(){
+    if (document.getElementById("path").value){
     hideShow("default-content", "hide");
+    hideShow("alreadydownloaded", "hide");
+    hideShow("alreadydownloadedpl", "hide");
+    hideShow('alreadyinlist', 'hide');
+    hideShow('emptylist', 'hide');
     hideShow("temporary-content", "show");
-    downloadAction = "addtolist"
+    hideShow("process", "show");
+    action = "addtolist"
     msgType = "task";
     pathName = document.getElementById("path").value;
-    chrome.storage.local.set({pathname:document.getElementById("path").value},setStoredPath);
+    chrome.storage.local.set({pathname:document.getElementById("path").value},sender);
+    }
+    else{
+      //If no path was given the input bar will be colored red
+      document.getElementById("path").style.borderColor="red";
+    }
   },false );
 
-  document.getElementById("continuebutton").addEventListener("click", function(){
-    hideShow("alreadyDownloaded-content", "hide");
-    hideShow("default-content", "show");
-  })
-  document.getElementById("continue").addEventListener("click", function(){
-    hideShow("temporary-content", "hide");
-    hideShow("default-content", "show");
-    document.getElementById("emptylist").style.display = "none";
-    document.getElementById("continue").style.display = "none";
-  })
-
+  for (cbutton of document.getElementsByClassName("continue")){
+    cbutton.addEventListener("click", function(){
+      hideShow("temporary-content", "hide");
+      hideShow("default-content", "show");
+    })
+  }
+  
   document.getElementById("errorbutton").addEventListener("click", function(){
     msgType = "reconnect";
     sender();

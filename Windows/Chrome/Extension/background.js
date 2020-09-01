@@ -3,54 +3,59 @@
  * @param error 
  */
 function onError(error) {
-  busy = 0
-  var err = ["error",error];
-  chrome.runtime.sendMessage(err);
+  sendError = {'action': 'error', 'error': error}
+  chrome.runtime.sendMessage(sendError);
 }
+
 function connect() {
   port = chrome.runtime.connectNative("tkdl");
   port.onMessage.addListener(onNativeMessage);
   port.onDisconnect.addListener(onNativeDisconnect);
 }
+
 function onNativeMessage(msg){
   if (chrome.extension.lastError){
     onError(chrome.extension.lastError);
   }
   else {
-    if (msg == "error"){
-      onError("youtube-dl error");
+    if (msg['action'] == "error"){
+      onError(msg['error']);
     }
-    else if(msg == "finished"){
-      busy = 0;
-      var nb = ["notBusy", ""];      
-      chrome.runtime.sendMessage(nb);
+    else if(msg['action']== 'progress'){
+      chrome.runtime.sendMessage(msg);
     }
-    else{
-      busy = 0;
-      var progressMessage = ["progress", msg]
-      chrome.runtime.sendMessage(progressMessage);
-    }    
+    else {
+      busy = 0;   
+      chrome.runtime.sendMessage(msg);
+    }  
   }
 }
+
 function onNativeDisconnect(){
   critErr = "restart";
-  onError("restart");
+  onError(critErr);
 }
+
 function onPopupMessage(msg){
   if(msg["msg"] == "task"){
-    busy = 1;    
+    if (msg['action']=='checkurl'){
+      busy = 2;
+    }
+    else{
+      busy = 1;
+    }    
     port.postMessage(msg);
   }
   else if(msg["msg"] == "reconnect"){
     chrome.runtime.reload();
   }
 }
+
 //START
 var busy = 0;
 var progress = 150;
 var critErr = "";
 var port =null;
-
 connect();
 port.onDisconnect.addListener(onNativeDisconnect);
 port.onMessage.addListener(onNativeMessage);

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+
+    </head>
+
+    <body>
+        <h3>TokkiDownload</h3>
+        <div id= "default-content">
+            
+            <div id="grid">
+
+                <div id="checkbox-col">
+                    <div id="default-sub-content-checkboxes">
+                        
+                        <input id="onlysound" name="onlysound" type="checkbox" value="onlySound"><label for="onlysound" id="lbl"> Only Sound</label>
+                        
+                    </div>
+                    <div id="default-sub-content-checkboxes">
+                        <input id="withoutsound" type="checkbox" value="withoutsound">
+                        <label for="withoutsound" id="lbl"> Without Sound</label>
+                    </div>
+                    <div id="default-sub-content-checkboxes">
+                        <input id="playlist" type="checkbox" value="playlist">
+                        <label for="playlist" id="lbl"> Playlist</label>
+                    </div>
+                    <div id="default-sub-content-checkboxes">
+                        <input id="subtitles" type="checkbox" value="subtitles">
+                        <label  for="subtitles" id="lbl"> Subtitles</label>
+                    </div>
+                </div>
+                
+                <div id="coltwocont">
+                    <div id="saveto-buttons">
+                        <div id="default-sub-content-path">
+                            Save To 
+                            <input id="path" type="text" value="" required>
+                            <label id="pathLbl" for="path">ex: C:/users/kchanon/desktop</label>
+                        </div>
+                        <div id="twobuttons">
+                            <button id="dllistbutton">Download List</button>
+                            <button id="addlistbutton">Add To List</button>
+                        </div>
+                    </div>
+    
+                    <div id="quality-button">
+                        <div id="default-sub-content-quality">
+                            <div >Quality</div>
+                            <select name="quality" id="qualitybox">
+                                <option value="bestpossible">Best Possible</option>
+                                <option value="1080p">1080p</option>
+                                <option value="720p">720p</option>
+                                <option value="480p">480p</option>
+                            </select>
+                              
+                        </div>
+                        <button id="dlbutton">Download</button>
+    
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div id="temporary-content">
+            <div id='updating'>Updating...</div>
+            <div id="emptylist">Empty Download List
+                <button class="continue">Continue</button>
+            </div>
+            <div id='alreadydownloaded'>Already Downloaded
+                <button class="continue">Continue</button>
+            </div>
+            <div id='alreadydownloadedpl'>Playlist Already Downloaded
+                <button class="continue">Continue</button>
+            </div>
+            <div id='alreadyinlist'>Already In List
+                <button class="continue">Continue</button>
+            </div>
+            
+            <div id='process'>
+                PROCESSING...<label id="progress">0%</label>
+                <div id="emptybar">
+                    <div id="myBar">
+                        
+                    </div>
+                </div>
+            </div>      
+        </div>
+        <div id="error-content">
+            <p id="errortext">Oh My Mistake~~</p>
+            <p id="errorhelp" font-weight: bold>Try to execute "FIX.bat" (doubleclick it) in your native app folder to fix things</p>
+            <button id="errorbutton">reconnect</button>
+        </div>
+        <script src="content.js"></script>
+    </body>
+</html>
