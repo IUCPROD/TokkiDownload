@@ -3,6 +3,7 @@
 Only for Windows
 
 How to make it work:
+
 Chrome:
 1. Download and extract the newest release. (Here https://github.com/IUCPROD/TokkiDownload/releases)
 2. Run the INSTALL.bat file in the folder. (double-click it)
