@@ -12,7 +12,7 @@ Chrome:
 5. In the description text of the addon you will find ID:, copy that ID (it looks something like this ckbocbdeeeakglmhhoehjncmpaiinglo)
 6. Go to the tokkidownload_application_chrome folder and open manifest.json with any editor application like notepad or windows editor
 7. Under "allowed_origins" you will find "chrome-extension://eafopkeeefacjkabhkeadjnbeibkobee/", replace the part between the /// with your id you copied earlier and save the file
-8. Go back to your browser and click the Remove button in the tokkidownload addon box. Then you can redo step 4 and you are ready to use it
+8. Go back to your browser and click the refresh button(small round arrow next to Errors) in the tokkidownload addon box. Then you are ready to use it, (Don't worry the Errors won't show up after restarting the browser and it should work fine)
 
 (All this shit is only necessary because chrome doesn't allow youtube downloaders in their addon store)
 
