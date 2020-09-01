@@ -18,7 +18,7 @@ Chrome:
 Firefox:
 1. Download and extract the newest release. (Here https://github.com/IUCPROD/TokkiDownload/releases)
 2. Run the INSTALL.bat file in the folder. (double-click it)
-3. By going to https://addons.mozilla.org/de/firefox/addon/tokkidownload and adding the add-on to your browser.
+3. Go to https://addons.mozilla.org/de/firefox/addon/tokkidownload and add the add-on to your browser.
 
 **!!!If you move the folder at some point after running INSTALL.bat, you will have to run FIX.bat.!!!**
 
