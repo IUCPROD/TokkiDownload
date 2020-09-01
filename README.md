@@ -30,4 +30,13 @@ How to use it:
 4. Choose your desired settings
 5. Click "Download" Button to download only the current tabs video. "Download list" will download all videos you've previously added to the list before, "Add to list" will add the video to the list.
 
+Tested on:
+
+Windows 10 1903
+
+Chrome 85
+(Should work on all the chromium browsers like edge, brave, vivaldi, etc)
+
+Firefox 80
+
 If you have any questions ask me on https://kpop.re/
